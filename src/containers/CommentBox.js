@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import CommentsList from '../components/CommentsList';
+import CommentForm from '../components/CommentForm';
 class CommentBox extends Component {
   constructor(props){
     super(props);
@@ -9,10 +10,19 @@ class CommentBox extends Component {
         { id: 2, author: 'Colin', text: 'When is hometime?'}
       ]
     }
+    this.handleCommentSubmit = this.handleCommentSubmit.bind(this)
+  }
+
+  handleCommentSubmit(comment){
+    comment.id = Date.now()
+    const updatedComments = [...this.state.data, comment]
+    this.setState({data: updatedComments})
   }
   render(){
     return (
       <div className="comment-box">
+       <h2>Add a comment</h2>
+       <CommentForm onCommentSubmit={this.handleCommentSubmit}/>
        <h2>Comments List</h2>
        <CommentsList data={this.state.data}/>
       </div>
